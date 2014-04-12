@@ -1,0 +1,19 @@
+{
+    "name": "leaflet-lineextremities",
+    "version": "0.1.0",
+    "description": "Shows a pattern at the extrimities of a Polyline",
+    "keywords": ["Leaflet", "GIS", "SVG"],
+    "main": "leaflet.lineextremities.js",
+    "bugs": {
+        "url": "https://github.com/makinacorpus/Leaflet.LineExtremities/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/makinacorpus/Leaflet.LineExtremities.git"
+    },
+    "license": "MIT",
+    "scripts": {},
+    "dependencies": {
+        "leaflet": "*"
+    }
+}
