@@ -1,13 +1,5 @@
 /* First, define some patterns */
 
-var stop = {'id': 'stop',
-           'viewBox': '0 0 1 8',
-           'refX': '0.5',
-           'refY': '4',
-           'markerUnits': 'strokeWidth',
-           'orient': 'auto',
-           'path': 'M 0 0 L 0 8 L 1 8 L 1 0 z'};
-
 (function () {
 
 var __onAdd = L.Polyline.prototype.onAdd,
@@ -17,6 +9,27 @@ var __onAdd = L.Polyline.prototype.onAdd,
 
 
 var PolylineExtremities = {
+
+    SYMBOLS: {
+        stopM: {
+            'id': 'stopM',
+            'viewBox': '0 0 1 8',
+            'refX': '0.5',
+            'refY': '4',
+            'markerUnits': 'strokeWidth',
+            'orient': 'auto',
+            'path': 'M 0 0 L 0 8 L 1 8 L 1 0 z'
+        },
+        squareM: {
+            'id': 'squareM',
+            'viewBox': '0 0 8 8',
+            'refX': '4',
+            'refY': '4',
+            'markerUnits': 'strokeWidth',
+            'orient': 'auto',
+            'path': 'M 0 0 L 0 8 L 8 8 L 8 0 z'
+        }
+    },
 
     onAdd: function (map) {
         __onAdd.call(this, map);
@@ -61,28 +74,41 @@ var PolylineExtremities = {
             return this;
         }
 
-        var id = 'pathdef-' + L.Util.stamp(this);
         var svg = this._map._pathRoot;
 
-        svg.childNodes[0].childNodes[0].setAttribute('stroke-linecap', 'butt')
-        this._path.setAttribute('id', id);
+        this._path.setAttribute('stroke-linecap', 'butt')
+        console.log(this._path.getAttribute('stroke'));
 
-        // Create the marker
-        var defsNode = L.Path.prototype._createElement('defs'),
-            markersNode = L.Path.prototype._createElement('marker'),
-            markerPath = L.Path.prototype._createElement('path');
-        for (var attr in window[pattern])
+        //variable pour voir si defsnode est deja créé
+        if (L.DomUtil.hasClass(svg,'defs')) {
+            var defsNode = svg.getElementById('defs');
+
+        } else{
+            L.DomUtil.addClass(svg,'defs');
+            var defsNode = L.Path.prototype._createElement('defs');
+        };
+
+        var markersNode = L.Path.prototype._createElement('marker'),
+            markerPath = L.Path.prototype._createElement('path'),
+            symbol = PolylineExtremities.SYMBOLS[pattern];
+
+        // tester si defs deja defini
+        // Create the markers definition
+        for (var attr in symbol)
             if (attr != 'path') {
-                markersNode.setAttribute(attr, window[pattern][attr]);
+                markersNode.setAttribute(attr, symbol[attr]);
             } else{
-                markerPath.setAttribute('d', window[pattern][attr]);
+                markerPath.setAttribute('d', symbol[attr]);
             };
-        markersNode.appendChild(markerPath);
         defsNode.appendChild(markersNode);
+        defsNode.setAttribute('id', 'defs')
         svg.appendChild(defsNode);
-        svg.setAttribute('marker-start', 'url(#' + pattern + ')');
-        svg.setAttribute('marker-end', 'url(#' + pattern + ')');
+        markersNode.appendChild(markerPath);
         this.defsNode = defsNode;
+
+        // Add the marker to the line
+        this._path.setAttribute('marker-start', 'url(#' + pattern + ')');
+        this._path.setAttribute('marker-end', 'url(#' + pattern + ')');
 
         return this;
     }

@@ -59,11 +59,18 @@
                    .fitWorld()
                    .addLayer(osm);
 
-        var path = L.polyline([[43, 1],[43, 1.5],[43.5, 2],[44, 3],[43.5, 4]], {
+        var pathGroup = L.featureGroup()
+
+        var path1 = L.polyline([[43, 1],[43, 1.5],[43.5, 2],[44, 3],[43.5, 4]], {
                 }).addTo(map);
 
-        map.fitBounds(path.getBounds());
-        path.showExtremities('stop');
+        var path2 = L.polyline([[44, 1],[44, 1.5]], {
+                }).addTo(map);
+
+        pathGroup.addLayer(path1,path2);
+        map.fitBounds(pathGroup.getBounds());
+        path1.showExtremities('stopM');
+        path2.showExtremities('squareM');
     </script>
 </body>
 </html>
