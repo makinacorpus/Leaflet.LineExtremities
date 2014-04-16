@@ -1,4 +1,4 @@
-Leaflet.TextPath
+Leaflet.LineExtremities
 ================
 
 Shows the extremities of a Polyline.

@@ -2,7 +2,7 @@
 
 var stop = {'id': 'stop',
            'viewBox': '0 0 1 8',
-           'refX': '0',
+           'refX': '0.5',
            'refY': '4',
            'markerUnits': 'strokeWidth',
            'orient': 'auto',
@@ -63,6 +63,8 @@ var PolylineExtremities = {
 
         var id = 'pathdef-' + L.Util.stamp(this);
         var svg = this._map._pathRoot;
+
+        svg.childNodes[0].childNodes[0].setAttribute('stroke-linecap', 'butt')
         this._path.setAttribute('id', id);
 
         // Create the marker
