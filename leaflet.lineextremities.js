@@ -4,7 +4,6 @@
 
 var __onAdd = L.Polyline.prototype.onAdd,
     __onRemove = L.Polyline.prototype.onRemove,
-    __updatePath = L.Polyline.prototype._updatePath,
     __bringToFront = L.Polyline.prototype.bringToFront;
 
 
@@ -12,16 +11,14 @@ var PolylineExtremities = {
 
     SYMBOLS: {
         stopM: {
-            'id': 'stopM',
-            'viewBox': '0 0 1 8',
-            'refX': '0.5',
+            'viewBox': '0 0 2 8',
+            'refX': '1',
             'refY': '4',
             'markerUnits': 'strokeWidth',
             'orient': 'auto',
-            'path': 'M 0 0 L 0 8 L 1 8 L 1 0 z'
+            'path': 'M 0 0 L 0 8 L 2 8 L 2 0 z'
         },
         squareM: {
-            'id': 'squareM',
             'viewBox': '0 0 8 8',
             'refX': '4',
             'refY': '4',
@@ -46,11 +43,6 @@ var PolylineExtremities = {
         this._drawExtremities();
     },
 
-    _updatePath: function () {
-        __updatePath.call(this);
-        this._drawExtremities();
-    },
-
     _drawExtremities: function () {
         var pattern = this._pattern;
         this.showExtremities(pattern);
@@ -60,6 +52,8 @@ var PolylineExtremities = {
 
     showExtremities: function (pattern) {
         this._pattern = pattern;
+
+        var styleProperties = ['stroke', 'stroke-opacity'];
 
         /* If not in SVG mode or Polyline not added to map yet return */
         /* showExtremities will be called by onAdd, using value stored in this._pattern */
@@ -74,12 +68,13 @@ var PolylineExtremities = {
             return this;
         }
 
+        var id = 'pathdef-' + L.Util.stamp(this);
         var svg = this._map._pathRoot;
 
         this._path.setAttribute('stroke-linecap', 'butt')
-        console.log(this._path.getAttribute('stroke'));
+        this._path.setAttribute('id', id);
 
-        //variable pour voir si defsnode est deja créé
+        // Check if the defs node is already created
         if (L.DomUtil.hasClass(svg,'defs')) {
             var defsNode = svg.getElementById('defs');
 
@@ -92,14 +87,24 @@ var PolylineExtremities = {
             markerPath = L.Path.prototype._createElement('path'),
             symbol = PolylineExtremities.SYMBOLS[pattern];
 
-        // tester si defs deja defini
         // Create the markers definition
-        for (var attr in symbol)
+        for (var attr in symbol) {
             if (attr != 'path') {
                 markersNode.setAttribute(attr, symbol[attr]);
             } else{
                 markerPath.setAttribute('d', symbol[attr]);
             };
+        };
+
+        for (var i = styleProperties.length - 1; i >= 0; i--) {
+            markersNode.setAttribute(styleProperties[i], this._path.getAttribute(styleProperties[i]));
+            console.log(this._path.getAttribute(styleProperties[i]));
+        };
+        markersNode.setAttribute('fill', markersNode.getAttribute('stroke'));
+        markersNode.setAttribute('fill-opacity', markersNode.getAttribute('stroke-opacity'));
+        markersNode.setAttribute('stroke-opacity', '0');
+
+        markersNode.setAttribute('id', id);
         defsNode.appendChild(markersNode);
         defsNode.setAttribute('id', 'defs')
         svg.appendChild(defsNode);
@@ -107,8 +112,8 @@ var PolylineExtremities = {
         this.defsNode = defsNode;
 
         // Add the marker to the line
-        this._path.setAttribute('marker-start', 'url(#' + pattern + ')');
-        this._path.setAttribute('marker-end', 'url(#' + pattern + ')');
+        this._path.setAttribute('marker-start', 'url(#' + id + ')');
+        this._path.setAttribute('marker-end', 'url(#' + id + ')');
 
         return this;
     }
