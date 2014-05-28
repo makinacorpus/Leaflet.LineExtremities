@@ -48,12 +48,8 @@ var PolylineExtremities = {
         this.showExtremities(pattern);
     },
 
-    
-
     showExtremities: function (pattern) {
         this._pattern = pattern;
-
-        var styleProperties = ['stroke', 'stroke-opacity'];
 
         /* If not in SVG mode or Polyline not added to map yet return */
         /* showExtremities will be called by onAdd, using value stored in this._pattern */
@@ -68,52 +64,54 @@ var PolylineExtremities = {
             return this;
         }
 
-        var id = 'pathdef-' + L.Util.stamp(this);
         var svg = this._map._pathRoot;
 
-        this._path.setAttribute('stroke-linecap', 'butt')
-        this._path.setAttribute('id', id);
-
         // Check if the defs node is already created
-        if (L.DomUtil.hasClass(svg,'defs')) {
-            var defsNode = svg.getElementById('defs');
+        var defsNode;
+        if (L.DomUtil.hasClass(svg, 'defs')) {
+            defsNode = svg.getElementById('defs');
 
         } else{
-            L.DomUtil.addClass(svg,'defs');
-            var defsNode = L.Path.prototype._createElement('defs');
-        };
+            L.DomUtil.addClass(svg, 'defs');
+            defsNode = L.Path.prototype._createElement('defs');
+            defsNode.setAttribute('id', 'defs');
+            svg.appendChild(defsNode);
+        }
+
+        // Add the marker to the line
+        var id = 'pathdef-' + L.Util.stamp(this);
+        this._path.setAttribute('stroke-linecap', 'butt');
+        this._path.setAttribute('id', id);
+        this._path.setAttribute('marker-start', 'url(#' + id + ')');
+        this._path.setAttribute('marker-end', 'url(#' + id + ')');
 
         var markersNode = L.Path.prototype._createElement('marker'),
             markerPath = L.Path.prototype._createElement('path'),
             symbol = PolylineExtremities.SYMBOLS[pattern];
 
         // Create the markers definition
+        markersNode.setAttribute('id', id);
         for (var attr in symbol) {
             if (attr != 'path') {
                 markersNode.setAttribute(attr, symbol[attr]);
             } else{
                 markerPath.setAttribute('d', symbol[attr]);
-            };
-        };
+            }
+        }
 
-        for (var i = styleProperties.length - 1; i >= 0; i--) {
-            markersNode.setAttribute(styleProperties[i], this._path.getAttribute(styleProperties[i]));
-            console.log(this._path.getAttribute(styleProperties[i]));
-        };
+        // Copy the path apparence to the marker
+        var styleProperties = ['stroke', 'stroke-opacity'];
+        for (var i=0; i<styleProperties.length; i++) {
+            var styleProperty = styleProperties[i];
+            var pathProperty = this._path.getAttribute(styleProperty);
+            markersNode.setAttribute(styleProperty, pathProperty);
+        }
         markersNode.setAttribute('fill', markersNode.getAttribute('stroke'));
         markersNode.setAttribute('fill-opacity', markersNode.getAttribute('stroke-opacity'));
         markersNode.setAttribute('stroke-opacity', '0');
 
-        markersNode.setAttribute('id', id);
-        defsNode.appendChild(markersNode);
-        defsNode.setAttribute('id', 'defs')
-        svg.appendChild(defsNode);
         markersNode.appendChild(markerPath);
-        this.defsNode = defsNode;
-
-        // Add the marker to the line
-        this._path.setAttribute('marker-start', 'url(#' + id + ')');
-        this._path.setAttribute('marker-end', 'url(#' + id + ')');
+        defsNode.appendChild(markersNode);
 
         return this;
     }
