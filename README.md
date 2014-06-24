@@ -15,6 +15,12 @@ To display "stop" markers at the extremities of a Polyline:
     layer.showExtremities('stop');
 ```
 
+There is currently 4 types of markers:
+* `stopM`: perpendicular line
+* `squareM`: square
+* `dotM`: dot
+* `dotL`: large dot
+
 Authors
 -------
 
