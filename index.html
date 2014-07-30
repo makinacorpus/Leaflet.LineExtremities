@@ -68,11 +68,18 @@
         }).addTo(map);
 
         var path2 = L.polyline([[44, 1],[44, 1.5]]).addTo(map);
+        var path3 = L.polyline([[43.986, 1.575], [43.65421, 1.453971]], {
+            color: 'black',
+            weight: 3,
+            opacity: 1.0
+        }).addTo(map);
 
-        pathGroup.addLayer(path1,path2);
+        pathGroup.addLayer(path1, path2, path3);
         map.fitBounds(pathGroup.getBounds());
+
         path1.showExtremities('stopM');
         path2.showExtremities('squareM');
+        path3.showExtremities('arrowM');
     </script>
 </body>
 </html>
