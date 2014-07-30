@@ -21,6 +21,7 @@ There is currently 4 types of markers:
 * `squareM`: square
 * `dotM`: dot
 * `dotL`: large dot
+* `arrowM`: arrow
 
 Authors
 -------

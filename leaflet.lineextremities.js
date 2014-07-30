@@ -43,6 +43,14 @@ var PolylineExtremities = {
             // http://stackoverflow.com/a/10477334
             'path': 'M 22.5, 22.5 m -20, 0 a 20,20 0 1,0 40,0 a 20,20 0 1,0 -40,0'
         },
+        arrowM: {
+            'viewBox': '0 0 10 10',
+            'refX': '1',
+            'refY': '5',
+            'markerUnits': 'strokeWidth',
+            'orient': 'auto',
+            'path': 'M 0 0 L 10 5 L 0 10 z'
+        },
     },
 
     onAdd: function (map) {
