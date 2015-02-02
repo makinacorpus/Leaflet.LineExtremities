@@ -125,7 +125,7 @@ var PolylineExtremities = {
         }
 
         // Copy the path apparence to the marker
-        var styleProperties = ['stroke', 'stroke-opacity'];
+        var styleProperties = ['class', 'stroke', 'stroke-opacity'];
         for (var i=0; i<styleProperties.length; i++) {
             var styleProperty = styleProperties[i];
             var pathProperty = this._path.getAttribute(styleProperty);
