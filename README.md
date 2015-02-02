@@ -5,6 +5,13 @@ Shows symbols on the extremities of a Polyline, using [SVG markers](https://deve
 
 Check out the [demo](http://makinacorpus.github.com/Leaflet.LineExtremities/) !
 
+Leaflet versions
+-----
+
+The version on the `gh-pages` branch targets Leaflet 0.7.3.
+
+Please use the `leaflet0.8-dev` branch to be compatible with the development version of Leaflet (0.8).
+
 Usage
 -----
 
@@ -16,7 +23,7 @@ To display dots at the extremities of a Polyline:
     layer.showExtremities('dotM');
 ```
 
-There is currently 4 types of markers:
+There is currently 5 types of markers:
 * `stopM`: perpendicular line
 * `squareM`: square
 * `dotM`: dot
