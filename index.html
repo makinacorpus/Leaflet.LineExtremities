@@ -64,10 +64,13 @@
 
         var path1 = L.polyline([[43, 1],[43, 1.5],[43.5, 2],[44, 3],[43.5, 4]], {
             color: 'red',
-            opacity: 1.0
+            weight: 5,
+            opacity: 0.6
         }).addTo(map);
 
-        var path2 = L.polyline([[44, 1],[44, 1.5]]).addTo(map);
+        var path2 = L.polyline([[44, 1],[44, 1.5]], {
+            weight: 5,
+        }).addTo(map);
         var path3 = L.polyline([[43.986, 1.575], [43.65421, 1.453971]], {
             color: 'black',
             weight: 3,
