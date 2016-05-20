@@ -30,6 +30,13 @@ There is currently 5 types of markers:
 * `dotL`: large dot
 * `arrowM`: arrow
 
+CHANGELOG
+---------
+
+### 0.1.1
+
+* Create the defs node before the paths (#10)
+
 Authors
 -------
 

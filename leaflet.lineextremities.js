@@ -95,12 +95,12 @@ var PolylineExtremities = {
         var defsNode;
         if (L.DomUtil.hasClass(svg, 'defs')) {
             defsNode = svg.getElementById('defs');
-
-        } else{
+        } else {
             L.DomUtil.addClass(svg, 'defs');
             defsNode = L.Path.prototype._createElement('defs');
             defsNode.setAttribute('id', 'defs');
-            svg.appendChild(defsNode);
+            var svgFirstChild = svg.childNodes[0];
+            svg.insertBefore(defsNode, svgFirstChild);
         }
 
         // Add the marker to the line
