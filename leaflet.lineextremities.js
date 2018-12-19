@@ -92,16 +92,13 @@ var PolylineExtremities = {
         var svg = this._map._panes.overlayPane.children[0];
 
         // Check if the defs node is already created
-        var defsNode;
-        if (L.DomUtil.hasClass(svg, 'defs')) {
-            defsNode = svg.getElementById('defs');
-        } else {
-            L.DomUtil.addClass(svg, 'defs');
-            defsNode = L.Path.prototype._createElement('defs');
-            defsNode.setAttribute('id', 'defs');
-            var svgFirstChild = svg.childNodes[0];
-            svg.insertBefore(defsNode, svgFirstChild);
+        var defsNode = svg.getElementById('defs');
+        if (defsNode === null) {
+          defsNode = document.createElementNS("http://www.w3.org/2000/svg", 'defs')
+          defsNode.setAttribute('id', 'defs');
         }
+        var svgFirstChild = svg.childNodes[0];
+        svg.insertBefore(defsNode, svgFirstChild);
 
         // Add the marker to the line
         var id = 'pathdef-' + L.Util.stamp(this);
@@ -110,8 +107,8 @@ var PolylineExtremities = {
         this._path.setAttribute('marker-start', 'url(#' + id + ')');
         this._path.setAttribute('marker-end', 'url(#' + id + ')');
 
-        var markersNode = L.Path.prototype._createElement('marker'),
-            markerPath = L.Path.prototype._createElement('path'),
+        var markersNode = document.createElementNS("http://www.w3.org/2000/svg", 'marker'),
+            markerPath = document.createElementNS("http://www.w3.org/2000/svg", 'path'),
             symbol = PolylineExtremities.SYMBOLS[pattern];
 
         // Create the markers definition
