@@ -89,7 +89,7 @@ var PolylineExtremities = {
             return this;
         }
 
-        var svg = this._map._pathRoot;
+        var svg = this._map._panes.overlayPane.children[0];
 
         // Check if the defs node is already created
         var defsNode;
