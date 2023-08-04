@@ -5,7 +5,7 @@ Shows symbols on the extremities of a Polyline, using [SVG markers](https://deve
 
 <div class="demo">
 <p align="center"><img src="./screenshoot.png"></p>
-<p align="center"> Check out the <a href="http://makinacorpus.github.io/Leaflet.FileLayer/">demo</a> ! </p>
+<p align="center"> Check out the <a href="https://makinacorpus.github.io/Leaflet.LIneExtremities/">demo</a> ! </p>
 </div>
 
 Leaflet versions
