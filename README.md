@@ -3,7 +3,10 @@ Leaflet.LineExtremities
 
 Shows symbols on the extremities of a Polyline, using [SVG markers](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker).
 
-Check out the [demo](https://makinacorpus.github.io/Leaflet.LineExtremities/) !
+<div class="demo">
+<p align="center"><img src="./screenshoot.png"></p>
+<p align="center"> Check out the <a href="http://makinacorpus.github.io/Leaflet.FileLayer/">demo</a> ! </p>
+</div>
 
 Leaflet versions
 -----
