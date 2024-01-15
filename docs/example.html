@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet.LineExtremities</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.2/leaflet.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.2/leaflet.js"></script>
+    <script src="../leaflet.lineextremities.js"></script>
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <script type="text/javascript">
+        var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; OpenStreetMap contributors',
+        });
+
+        var map = L.map('map')
+                   .fitWorld()
+                   .addLayer(osm);
+
+        var pathGroup = L.featureGroup()
+
+        var path1 = L.polyline([[43, 1],[43, 1.5],[43.5, 2],[44, 3],[43.5, 4]], {
+            color: 'red',
+            opacity: 1.0
+        }).addTo(map);
+
+        var path2 = L.polyline([[44, 1],[44, 1.5]]).addTo(map);
+        var path3 = L.polyline([[43.986, 1.575], [43.65421, 1.453971]], {
+            color: 'black',
+            weight: 3,
+            opacity: 1.0
+        }).addTo(map);
+
+        pathGroup.addLayer(path1, path2, path3);
+        map.fitBounds(pathGroup.getBounds());
+
+        path1.showExtremities('stopM');
+        path2.showExtremities('squareM');
+        path3.showExtremities('arrowM');
+    </script>
+</body>
+</html>
