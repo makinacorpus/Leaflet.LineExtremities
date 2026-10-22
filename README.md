@@ -8,7 +8,8 @@ Check out the [demo](http://makinacorpus.github.com/Leaflet.LineExtremities/) !
 Leaflet versions
 -----
 
-The version on the `gh-pages` branch targets Leaflet 1.3.4
+Works with Leaflet 0.7 and 1.x. Extremities are drawn with SVG markers, so lines
+rendered on a canvas get none.
 
 Usage
 -----
