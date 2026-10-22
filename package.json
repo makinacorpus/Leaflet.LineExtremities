@@ -1,7 +1,7 @@
 {
     "name": "leaflet-lineextremities",
     "version": "0.1.1",
-    "description": "Shows a pattern at the extrimities of a Polyline",
+    "description": "Shows a pattern at the extremities of a Polyline",
     "keywords": ["Leaflet", "GIS", "SVG"],
     "main": "leaflet.lineextremities.js",
     "bugs": {
