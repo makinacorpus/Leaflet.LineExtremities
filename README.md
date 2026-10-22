@@ -10,9 +10,8 @@ Shows symbols on the extremities of a Polyline, using [SVG markers](https://deve
 Leaflet versions
 -----
 
-The version on the `gh-pages` branch targets Leaflet 0.7.3.
-
-Please use the `leaflet0.8-dev` branch to be compatible with the development version of Leaflet (0.8).
+Works with Leaflet 0.7 and 1.x. Extremities are drawn with SVG markers, so lines
+rendered on a canvas get none.
 
 Usage
 -----
