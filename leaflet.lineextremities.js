@@ -89,16 +89,19 @@ var PolylineExtremities = {
             return this;
         }
 
-        var svg = this._map._panes.overlayPane.children[0];
+        // The markers must be defined in the SVG element that holds the line
+        // (none when the line is drawn on a canvas)
+        var svg = this._path && this._path.ownerSVGElement;
+        if (!svg) {
+            return this;
+        }
 
         // Check if the defs node is already created
-        var defsNode = svg.getElementById('defs');
-        if (defsNode === null) {
-          defsNode = document.createElementNS("http://www.w3.org/2000/svg", 'defs')
-          defsNode.setAttribute('id', 'defs');
+        var defsNode = svg.querySelector('defs');
+        if (!defsNode) {
+            defsNode = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            svg.insertBefore(defsNode, svg.firstChild);
         }
-        var svgFirstChild = svg.childNodes[0];
-        svg.insertBefore(defsNode, svgFirstChild);
 
         // Add the marker to the line
         var id = 'pathdef-' + L.Util.stamp(this);
