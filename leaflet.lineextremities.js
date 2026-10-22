@@ -82,10 +82,23 @@ var PolylineExtremities = {
           return this;
         }
 
+        /* Remove the markers previously drawn for this line */
+        if (this._patternNode && this._patternNode.parentNode) {
+            this._patternNode.parentNode.removeChild(this._patternNode);
+        }
+        this._patternNode = null;
+
         /* If empty pattern, hide */
         if (!pattern) {
-            if (this._patternNode && this._patternNode.parentNode)
-                this._map._pathRoot.removeChild(this._patternNode);
+            if (this._path) {
+                this._path.removeAttribute('marker-start');
+                this._path.removeAttribute('marker-end');
+                if (this.options.lineCap) {
+                    this._path.setAttribute('stroke-linecap', this.options.lineCap);
+                } else {
+                    this._path.removeAttribute('stroke-linecap');
+                }
+            }
             return this;
         }
 
@@ -137,6 +150,7 @@ var PolylineExtremities = {
 
         markersNode.appendChild(markerPath);
         defsNode.appendChild(markersNode);
+        this._patternNode = markersNode;
 
         return this;
     }
